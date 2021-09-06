@@ -1,12 +1,22 @@
 import React from 'react';
 import './App.css';
 import ReactGA from 'react-ga';
+import { useTranslation } from 'react-i18next';
+import i18n from './i18n/config';
+import germany from './images/germany.png';
+import us from './images/us.png';
 
 function App() {
 
   const TRACKING_ID = "285414846"; 
   ReactGA.initialize(TRACKING_ID);
-  
+
+  const { t } = useTranslation();
+    const langOptions = {
+      us: 'us',
+      de: 'de'
+    };
+  const [currLanguage,setcurrLanguage] = React.useState(langOptions.us);
   const [randomQuote, setRandomQuote] = React.useState('Hello Tester !');
   const [randomColor, setRandomColor] = React.useState('#4d79ff');
   const divStyle = {
@@ -40,22 +50,42 @@ function App() {
       'color': '#003d4d'
     },
   ];
+
+  const onLanguageChange = () => {
+    const changedLang = changeLangTo(currLanguage);
+    setcurrLanguage(changedLang);
+    i18n.changeLanguage(changedLang);
+  }
+
+  const changeLangTo = (currLanguage) => (currLanguage === langOptions.us? langOptions.de: langOptions.us);
   const handleClick = () => {
     const index = (Math.floor(Math.random() * 10)) % randomQuoteArr.length;
     setRandomQuote(randomQuoteArr[index]['quote']);
     setRandomColor(randomQuoteArr[index]['color']);
   }
+
+  const titleDiv = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  };
+
   return (
     <div style={divStyle}>
-        <h2>This a test site for Google Analytics</h2>
+        <div style={titleDiv}>
+          <h2>{t('title')}</h2>
+          <div style={{cursor: 'pointer'}} onClick={() => onLanguageChange()}> 
+              <img src={currLanguage === langOptions.us ? us: germany} width="40" height="25" alt="image"/>
+          </div> 
+        </div>
         <div>
             <div style={divStyle}>
                 <h4 style={{color: randomColor}}>{randomQuote}</h4>
-                <button style={{backgroundColor: randomColor, color: 'white'}} onClick={handleClick}>Click Me!</button>
+                <button style={{backgroundColor: randomColor, color: 'white'}} onClick={handleClick}>{t('clickButton')}</button>
             </div> 
         </div>
         <div>
-          <p>Didn't like the quote??? Let's drink some <a target="_blank" href="https://www.google.com/search?q=how+not+to+be+grumpy&rlz=1C1GCEV_en&sxsrf=AOaemvJ1wHBQKSdo0aS2FRcfRPdAyyc-8A%3A1630946920877&ei=aEY2Yd3bNIyTxc8Pgeu0CA&oq=how+not+to+be+grumpy&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoKCC4QsAMQJxCTAjoHCAAQsAMQHjoJCAAQsAMQCBAeOgQIIxAnOgYIIxAnEBM6BAguEEM6BAgAEEM6CwguEIAEEMcBEKMCOgcILhAnEJMCOgsIABCABBCxAxCDAToOCC4QgAQQsQMQxwEQowI6BQguEIAEOhEILhCABBCxAxCDARDHARDRAzoICC4QgAQQkwI6BQgAEIAEOgUILhDLAUoFCDwSATFKBAhBGAFQxa8BWODXAWCI6QFoAXAAeACAAboBiAH1EJIBBDExLjmYAQCgAQHIAQjAAQE&sclient=gws-wiz&ved=0ahUKEwjdr_be5uryAhWMSfEDHYE1DQEQ4dUDCA4&uact=5">Elixir of hapiness</a></p>
+          <p>{t('clickLink1')} <a target="_blank" href="https://www.google.com/search?q=how+not+to+be+grumpy&rlz=1C1GCEV_en&sxsrf=AOaemvJ1wHBQKSdo0aS2FRcfRPdAyyc-8A%3A1630946920877&ei=aEY2Yd3bNIyTxc8Pgeu0CA&oq=how+not+to+be+grumpy&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMsBMgUIABDLATIFCAAQywEyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoKCC4QsAMQJxCTAjoHCAAQsAMQHjoJCAAQsAMQCBAeOgQIIxAnOgYIIxAnEBM6BAguEEM6BAgAEEM6CwguEIAEEMcBEKMCOgcILhAnEJMCOgsIABCABBCxAxCDAToOCC4QgAQQsQMQxwEQowI6BQguEIAEOhEILhCABBCxAxCDARDHARDRAzoICC4QgAQQkwI6BQgAEIAEOgUILhDLAUoFCDwSATFKBAhBGAFQxa8BWODXAWCI6QFoAXAAeACAAboBiAH1EJIBBDExLjmYAQCgAQHIAQjAAQE&sclient=gws-wiz&ved=0ahUKEwjdr_be5uryAhWMSfEDHYE1DQEQ4dUDCA4&uact=5">{t('clickLink2')}</a></p>
         </div>
 
     </div>
