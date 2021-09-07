@@ -8,7 +8,7 @@ import us from './images/us.png';
 
 function App() {
 
-  const TRACKING_ID = "285414846"; 
+  const TRACKING_ID = "G-BJE8KQ90QX"; 
   ReactGA.initialize(TRACKING_ID);
 
   const { t } = useTranslation();
