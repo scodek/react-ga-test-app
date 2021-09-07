@@ -11,6 +11,10 @@ function App() {
   const TRACKING_ID = "G-BJE8KQ90QX"; 
   ReactGA.initialize(TRACKING_ID);
 
+  React.useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  });
+
   const { t } = useTranslation();
     const langOptions = {
       us: 'us',
