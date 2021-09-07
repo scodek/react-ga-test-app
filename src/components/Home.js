@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from '../i18n/config';
 import germany from '../images/germany.png';
 import us from '../images/us.png';
-import {withRouter} from "react-router-dom";
+import ReactGA from 'react-ga';
 
 const Home = () => {
 
@@ -55,6 +55,10 @@ const Home = () => {
     
       const changeLangTo = (currLanguage) => (currLanguage === langOptions.us? langOptions.de: langOptions.us);
       const handleClick = () => {
+        ReactGA.event({
+            category: 'Button onClick event',
+            action: 'Click Me button is clicked'
+        });
         const index = (Math.floor(Math.random() * 10)) % randomQuoteArr.length;
         setRandomQuote(randomQuoteArr[index]['quote']);
         setRandomColor(randomQuoteArr[index]['color']);
