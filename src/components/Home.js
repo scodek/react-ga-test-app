@@ -56,16 +56,20 @@ const Home = () => {
       const changeLangTo = (currLanguage) => (currLanguage === langOptions.us? langOptions.de: langOptions.us);
       const handleClick = () => {
         ReactGA.event({
-            category: 'Click Me Button',
-            action: 'Click Me button is clicked'
+            category: 'Button',
+            action: 'On click a random quote is generated',
         });
+    
+
+        
 
         
 
         const index = (Math.floor(Math.random() * 10)) % randomQuoteArr.length;
         ReactGA.event({
             category: 'Quote',
-            action: randomQuoteArr[index]['quote']
+            action: 'new quote new colour',
+            label: randomQuoteArr[index]['quote']
         });
 
         setRandomQuote(randomQuoteArr[index]['quote']);
