@@ -51,6 +51,11 @@ const Home = () => {
         const changedLang = changeLangTo(currLanguage);
         setcurrLanguage(changedLang);
         i18n.changeLanguage(changedLang);
+        ReactGA.event({
+          category: 'Language Selection',
+          action: 'new language generated',
+          label: changedLang
+      });
       }
     
       const changeLangTo = (currLanguage) => (currLanguage === langOptions.us? langOptions.de: langOptions.us);
